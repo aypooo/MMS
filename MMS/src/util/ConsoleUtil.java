@@ -4,12 +4,12 @@ import java.util.Scanner;
 import vo.Member;
 import vo.SearchData;
 public class ConsoleUtil {
-	
+	InputMismatch im = new InputMismatch();
 	public Member getNewMember (Scanner scan) {
 		Member newMember = new Member();
 		System.out.println("=====새 회원 정보 등록=====");
 		System.out.println("회원아이디 :");
-		int id = scan.nextInt();
+		int id = im.exep();
 		System.out.println("회원이름 :");
 		String name = scan.next();
 		System.out.println("회원이메일 :");
@@ -21,7 +21,7 @@ public class ConsoleUtil {
 		System.out.println("회원전화번호 :");
 		String tel = scan.next();
 		System.out.println("회원나이 :");
-		int age = scan.nextInt();
+		int age = im.exep();
 		
 		newMember.setId(id);
 		newMember.setName(name);
@@ -34,7 +34,7 @@ public class ConsoleUtil {
 		}
 	
 		public void printRegistSuccessMessage(int id) {
-			System.out.println(id + "회원 등록 성공");
+			System.out.println(id +"회원 등록 성공");
 		}
 		public void printRegistFailMessage(int id) {
 			System.out.println(id+"회원 등록 실패");
@@ -52,7 +52,7 @@ public class ConsoleUtil {
 		
 		public int getId(String msgKind, Scanner scan) {
 			System.out.println(msgKind + "아이디 : " );
-					return scan.nextInt();//사용자가 입력한 아이디를 바로 return해 준다.
+					return im.exep();//사용자가 입력한 아이디를 바로 return해 준다.
 		}
 		
 		public Member getNewMember(Member oldMember, Scanner scan) {
@@ -76,7 +76,7 @@ public class ConsoleUtil {
 			String tel = scan.next();
 			System.out.println("이전 나이 :" + oldMember.getAge());
 			System.out.println("새 회원 나이 : ");
-			int age = scan.nextInt();
+			int age = im.exep();
 			
 			member.setId(oldMember.getId());
 			member.setName(name);
@@ -90,18 +90,18 @@ public class ConsoleUtil {
 			
 		}
 		public void printUpdateSuccessMessage(int id) {
-			System.out.println(id + "회원 정보 수정 성공");
+			System.out.println(id + "회원 정보 수정 했습니다.");
 		}
 		
 		public void printUpdateFailMessage(int id) {
-			System.out.println(id+"회원 정보 수정 실패");
+			System.out.println(id+"회원 정보 수정 할 수 없습니다.");
 		}
 		
 		public void printDeleteSuccessMessage(int id) {
-			System.out.println(id + "회원 정보 삭제 성공");
+			System.out.println(id + "회원 정보 삭제했습니다.");
 		}
 		public void printDeleteFailMessage(int id) {
-			System.out.println(id + "회원 정보 삭제 실패");
+			System.out.println(id + "회원 정보 삭제 할 수 없습니다.");
 		}
 		
 		
@@ -123,6 +123,19 @@ public class ConsoleUtil {
 				System.out.println("검색할 이름 :");
 				searchValue = scan.next();
 			}
+			else if(searchCondition.equals("1")) {
+				searchCondition = "아이디";
+				System.out.println("검색할 아이디:");
+				searchValue = scan.next();
+			}	
+			else if(searchCondition.equals("2")) {
+				searchCondition = "이름";
+				System.out.println("검색할 이름:");
+				searchValue = scan.next();
+			}
+			else
+				System.out.println("다시입력해주세요:");
+			
 			
 			SearchData searchData = new SearchData();
 			//리턴 할 값이 두 개 이므로 리턴 할 값을 속성으로 저장 할 클래스 설계
@@ -142,7 +155,7 @@ public class ConsoleUtil {
 		}
 		
 		public void printSearchMemberArray(Member[]memberArray) {
-			if(memberArray == null) {
+			if(memberArray.length == 0) {
 				System.out.println("이름으로 검색한 결과가 없습니다.");
 			}
 			else {
